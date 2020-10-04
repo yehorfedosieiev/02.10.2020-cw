@@ -7,7 +7,8 @@ $("body").on("click", "[data-editable]", function(event){
 	
 	const $element = $(this);
 	console.log("текст в теге", $element.text());
-	$("<input>")
+	let $input = $("<input>");
+	$input
 		.attr("type", type)
 		.insertAfter($element)
 		.val($element.text()) // 
@@ -21,7 +22,7 @@ $("body").on("click", "[data-editable]", function(event){
 					$element
 						.insertAfter(this)
 						.text($(this).val())
-					console.log("значение this ", $(this).val())
+					console.log("значение this - val ", $(this).val())
 					$(this).remove();
 					break;
 				case 27:
@@ -29,7 +30,46 @@ $("body").on("click", "[data-editable]", function(event){
 					$(this).remove();
 					break;
 			}
-		})
+		});
 
+	let $buttonConfirm = $("<button>");
+	$buttonConfirm
+		.attr("type", 'button')
+		// .attr('id', 'confirm')
+		.insertAfter($input)
+		.addClass('btn btn-primary');
+	
+	let $confirmIcon = $("<i>");
+	$confirmIcon
+		.addClass('glyphicon glyphicon-ok')
+		.appendTo($buttonConfirm);
+
+	let $buttonCancel = $("<button>");
+	$buttonCancel
+		.attr("type", 'button')
+		// .attr('id', 'cancel')
+		.insertAfter($buttonConfirm)
+		.addClass('btn btn-danger');
+
+	let $cancelIcon = $("<i>");
+	$cancelIcon
+		.addClass('glyphicon glyphicon-remove')
+		.appendTo($buttonCancel);
+	
+	$buttonConfirm
+		.on('click', function() {
+			$element
+				.insertAfter($input)
+				.text($input.val())
+			this.remove();
+			$buttonCancel.remove();
+		});
+	$buttonCancel
+		.on('click', function(){
+			$element.insertAfter(this);
+			this.remove();
+			$buttonConfirm.remove();
+		});
+	
 	$element.remove();
 });
