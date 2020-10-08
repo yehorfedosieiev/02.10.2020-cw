@@ -24,10 +24,14 @@ $("body").on("click", "[data-editable]", function(event){
 						.text($(this).val())
 					console.log("значение this - val ", $(this).val())
 					$(this).remove();
+					$buttonConfirm.remove();
+					$buttonCancel.remove();
 					break;
 				case 27:
 					$element.insertAfter(this);
 					$(this).remove();
+					$buttonConfirm.remove();
+					$buttonCancel.remove();
 					break;
 			}
 		});
@@ -62,12 +66,14 @@ $("body").on("click", "[data-editable]", function(event){
 				.insertAfter($input)
 				.text($input.val())
 			this.remove();
+			$input.remove()
 			$buttonCancel.remove();
 		});
 	$buttonCancel
 		.on('click', function(){
 			$element.insertAfter(this);
 			this.remove();
+			$input.remove()
 			$buttonConfirm.remove();
 		});
 	
